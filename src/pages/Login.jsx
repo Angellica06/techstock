@@ -1,6 +1,13 @@
 import Logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  function handleLogin() {
+    navigate("/dashboard");
+  }
+
   return (
     <div className="login h-screen grid grid-cols-1 lg:grid-cols-2 gap-3 justify-center items-center p-14 md:px-40">
       <div className="">
@@ -28,7 +35,7 @@ function Login() {
         <label className="text-primary font-semibold">Email</label>
         <input
           className="border border-gray-500 focus:outline-none focus:border-2 focus:border-primary bg-gray-100 rounded-2xl p-3"
-          type="text"
+          type="email"
           placeholder="Digite seu email"
         />
 
@@ -39,7 +46,10 @@ function Login() {
           placeholder="Digite sua senha"
         />
 
-        <button className="p-3 bg-primary text-white font-medium rounded-2xl mt-2">
+        <button
+          onClick={handleLogin}
+          className="p-3 bg-primary text-white font-medium rounded-2xl mt-2 cursor-pointer"
+        >
           Entrar
         </button>
       </div>
