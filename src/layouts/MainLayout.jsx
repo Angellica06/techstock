@@ -22,7 +22,7 @@ function MainLayout() {
         )}
       </button>
 
-      <main className="flex">
+      <main className="flex-1">
         <Outlet />
       </main>
     </div>

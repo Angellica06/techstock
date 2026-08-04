@@ -8,18 +8,22 @@
   --color-surface: #FFFFFF;
 
   --color-text: #1F2937;
-  --color-text-light: #6B7280;
+  --color-text-light: #4c505a;
 
-  --color-success: #22C55E;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
+  --color-success: #D4FFE4;
+  --color-warning: #FDF5DF;
+  --color-danger: #FCE7E6;
+  --color-info: #DCE7FF;
 
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
+
+  --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 body {
     font: --font-body;
+    background-color: var(--color-background);
 }
 
 .login {
