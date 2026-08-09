@@ -24,6 +24,7 @@
 body {
     font: --font-body;
     background-color: var(--color-background);
+    overflow: hidden;
 }
 
 .login {
