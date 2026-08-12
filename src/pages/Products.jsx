@@ -2,7 +2,7 @@ import Input from "../components/ui/Input";
 import Select from "../components/ui/Select";
 import Button from "../components/ui/Button";
 import DataTable from "../components/table/DataTable";
-import { columns } from "../components/table/columns";
+import { columns } from "../components/table/ProductColumns";
 import { LuPlus } from "react-icons/lu";
 import Modal from "../components/ui/Modal";
 import { useState } from "react";
