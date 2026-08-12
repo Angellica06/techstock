@@ -1,7 +1,8 @@
-function Button({ children, className = "" }) {
+function Button({ children, className = "", onClick }) {
   return (
     <button
-      className={`bg-primary-light text-surface p-3 rounded-lg ${className}`}
+      onClick={onClick}
+      className={`bg-primary-light text-surface p-3 rounded-lg cursor-pointer ${className}`}
     >
       {children}
     </button>

@@ -4,6 +4,8 @@ import Button from "../components/ui/Button";
 import DataTable from "../components/table/DataTable";
 import { columns } from "../components/table/columns";
 import { LuPlus } from "react-icons/lu";
+import Modal from "../components/ui/Modal";
+import { useState } from "react";
 
 const data = [
   {
@@ -44,6 +46,8 @@ const statusOptions = [
 ];
 
 function Products() {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   return (
     <div className="ml-3 mr-6 my-6">
       <h1 className="text-text text-3xl font-semibold">Produtos</h1>
@@ -56,7 +60,10 @@ function Products() {
           <Select options={statusOptions} />
         </div>
 
-        <Button className="flex items-center justify-center gap-2 lg:ml-auto">
+        <Button
+          className="flex items-center justify-center gap-2 lg:ml-auto"
+          onClick={() => setIsOpenModal(!isOpenModal)}
+        >
           <LuPlus size={18} />
           Novo Produto
         </Button>
@@ -65,6 +72,39 @@ function Products() {
       <div className="mt-6 overflow-x-auto">
         <DataTable columns={columns} data={data} />
       </div>
+
+      <Modal
+        isOpenModal={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        title="Novo produto"
+        description="Adicione um novo produto ao estoque."
+        submitText="Adicionar"
+      >
+        <div className="col-span-2">
+          <label>Nome do produto</label>
+          <Input type="text" placeholder="Nome do produto" />
+        </div>
+
+        <div className="col-span-2">
+          <label>Categoria</label>
+          <Select options={categoryOptions} />
+        </div>
+
+        <div>
+          <label>Estoque</label>
+          <Input type="number" placeholder="Estoque" />
+        </div>
+
+        <div>
+          <label>Estoque mínimo</label>
+          <Input type="number" placeholder="Estoque mínimo" />
+        </div>
+
+        <div className="col-span-2">
+          <label>Preço</label>
+          <Input type="text" placeholder="Preço R$" />
+        </div>
+      </Modal>
     </div>
   );
 }
