@@ -1,0 +1,10 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Administrador",
+            "email": "admin@techstock.com",
+            "password": "T3ch@Stock#2026"
+        }
+    ]
+}

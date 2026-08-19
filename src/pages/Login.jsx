@@ -1,12 +1,23 @@
+import { useState } from "react";
 import Logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import useAuth from "../hooks/useAuth";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  function handleLogin() {
-    navigate("/dashboard");
-  }
+  const testarLogin = async () => {
+    const resultado = await login(email, senha);
+
+    if (resultado.success) navigate("/dashboard");
+    else setError(resultado.message);
+  };
 
   return (
     <div className="login h-screen grid grid-cols-1 lg:grid-cols-2 gap-3 justify-center items-center p-14 md:px-40">
@@ -33,22 +44,27 @@ function Login() {
         </h1>
 
         <label className="text-primary font-semibold">Email</label>
-        <input
-          className="border border-gray-500 focus:outline-none focus:border-2 focus:border-primary bg-gray-100 rounded-2xl p-3"
+        <Input
           type="email"
           placeholder="Digite seu email"
+          onChange={(e) => setEmail(e.target.value)}
+          className={"shadow-none border border-gray-500 bg-gray-100"}
         />
 
         <label className="text-primary font-semibold">Senha</label>
-        <input
-          className="border border-gray-500 focus:outline-none focus:border-2 focus:border-primary bg-gray-100 rounded-2xl p-3"
+        <Input
           type="password"
           placeholder="Digite sua senha"
+          onChange={(e) => setSenha(e.target.value)}
+          className={"shadow-none border border-gray-500 bg-gray-100"}
         />
 
+        {error && <p className="text-red-600">{error}</p>}
+
         <button
-          onClick={handleLogin}
-          className="p-3 bg-primary text-white font-medium rounded-2xl mt-2 cursor-pointer"
+          disabled={email === "" || senha === ""}
+          onClick={testarLogin}
+          className="p-3 bg-primary text-white font-medium rounded-lg mt-3 cursor-pointer disabled:cursor-auto disabled:bg-gray-400"
         >
           Entrar
         </button>
