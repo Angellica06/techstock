@@ -9,12 +9,19 @@ function Modal({
   children,
   onSubmit,
   submitText = "Salvar",
+  disabled,
 }) {
   if (!isOpenModal) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50" onClick={onClose}>
-      <div className="w-full max-w-lg rounded-xl bg-surface p-6" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-lg rounded-xl bg-surface p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between">
           <h2 className="text-xl font-semibold">{title}</h2>
 
@@ -33,7 +40,14 @@ function Modal({
         <div className="mt-4 grid grid-cols-2 gap-4">{children}</div>
 
         <div className="mt-4 flex gap-3">
-          <Button onClick={onSubmit}>{submitText}</Button>
+          <Button
+            type="submit"
+            className="disabled:cursor-auto disabled:bg-gray-400"
+            onClick={onSubmit}
+            disabled={disabled}
+          >
+            {submitText}
+          </Button>
 
           <Button onClick={onClose} className="bg-red-600">
             Cancelar

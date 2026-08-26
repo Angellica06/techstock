@@ -4,28 +4,26 @@ import { LuPlus } from "react-icons/lu";
 import DataTable from "../components/table/DataTable";
 import { columns } from "../components/table/CategoryColumns";
 import Modal from "../components/ui/Modal";
-import { useState } from "react";
-
-const data = [
-  {
-    name: "Computadores",
-    description: "Computadores e notebooks",
-    products: 32,
-  },
-  {
-    name: "Monitores",
-    description: "Monitores e telas",
-    products: 18,
-  },
-  {
-    name: "Acessórios",
-    description: "Periféricos e acessórios",
-    products: 45,
-  },
-];
+import { useState, useEffect } from "react";
+import useCategories from "../hooks/useCategories";
 
 function Categorias() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [categorias, setCategorias] = useState([]);
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+
+  const { buscarCategorias, loading, error } = useCategories();
+
+  useEffect(() => {
+    const carregarCategorias = async () => {
+      const resultado = await buscarCategorias();
+
+      setCategorias(resultado.categoria);
+    };
+
+    carregarCategorias();
+  }, []);
 
   return (
     <div className="ml-3 mr-6 my-6">
@@ -47,7 +45,7 @@ function Categorias() {
       </div>
 
       <div className="mt-6 overflow-x-auto">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={categorias} error={error} />
       </div>
 
       <Modal
@@ -55,16 +53,27 @@ function Categorias() {
         onClose={() => setIsOpenModal(false)}
         title="Nova categoria"
         description="Adicione uma nova categoria ao estoque."
-        submitText="Adicionar"
+        submitText={loading ? "Adicionando..." : "Adicionar"}
+        disabled={nome === "" || descricao === ""}
       >
         <div className="col-span-2">
           <label>Nome da categoria</label>
-          <Input type="text" placeholder="Nome da categoria" />
+          <Input
+            type="text"
+            placeholder="Nome da categoria"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
         </div>
 
         <div className="col-span-2">
           <label>Descrição</label>
-          <Input type="text" placeholder="Descrição" />
+          <Input
+            type="text"
+            placeholder="Descrição"
+            value={descricao}
+            onChange={(e) => setDescricao(e.target.value)}
+          />
         </div>
       </Modal>
     </div>

@@ -1,10 +1,22 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Administrador",
-            "email": "admin@techstock.com",
-            "password": "T3ch@Stock#2026"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "name": "Administrador",
+      "email": "admin@techstock.com",
+      "password": "T3ch@Stock#2026"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Eletrônicos",
+      "descricao": "Produtos eletrônicos em geral."
+    },
+    {
+      "id": "2",
+      "nome": "Periféricos",
+      "descricao": "Acessórios e dispositivos para computadores."
+    }
+  ]
 }

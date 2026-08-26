@@ -2,16 +2,12 @@ import { FiEdit3, FiTrash2 } from "react-icons/fi";
 
 export const columns = [
   {
-    accessorKey: "name",
+    accessorKey: "nome",
     header: "Categorias",
   },
   {
-    accessorKey: "description",
+    accessorKey: "descricao",
     header: "Descrição",
-  },
-  {
-    accessorKey: "products",
-    header: "Produtos",
   },
   {
     id: "actions",

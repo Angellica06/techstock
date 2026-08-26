@@ -4,7 +4,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-function DataTable({ columns, data }) {
+function DataTable({ columns, data, error }) {
   const table = useReactTable({
     data,
     columns,
@@ -49,6 +49,7 @@ function DataTable({ columns, data }) {
           ))}
         </tbody>
       </table>
+      {error && <p className="text-center my-5 text-text-light">{error}</p>}
     </div>
   );
 }
