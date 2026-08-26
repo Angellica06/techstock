@@ -12,6 +12,7 @@ function Categorias() {
   const [categorias, setCategorias] = useState([]);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [busca, setBusca] = useState("");
 
   const { buscarCategorias, loading, error } = useCategories();
 
@@ -25,6 +26,10 @@ function Categorias() {
     carregarCategorias();
   }, []);
 
+  const categoriasFiltradas = categorias.filter((categoria) =>
+    categoria.nome.toLowerCase().includes(busca.toLowerCase()),
+  );
+
   return (
     <div className="ml-3 mr-6 my-6">
       <h1 className="text-text text-3xl font-semibold">Categorias</h1>
@@ -32,7 +37,12 @@ function Categorias() {
 
       <div className="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center">
         <div className="grid flex-1 gap-3 md:grid-cols-3 lg:max-w-225">
-          <Input type="search" placeholder="Buscar categoria..." />
+          <Input
+            type="search"
+            placeholder="Buscar categoria..."
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
         </div>
 
         <Button
@@ -45,7 +55,7 @@ function Categorias() {
       </div>
 
       <div className="mt-6 overflow-x-auto">
-        <DataTable columns={columns} data={categorias} error={error} />
+        <DataTable columns={columns} data={categoriasFiltradas} error={error} />
       </div>
 
       <Modal
