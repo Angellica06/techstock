@@ -57,7 +57,7 @@ function Categorias() {
     if (nomeExiste) {
       setToast({
         message: "Já existe uma categoria com esse nome.",
-        type: "error",
+        type: "warning",
       });
 
       return;

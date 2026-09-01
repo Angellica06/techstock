@@ -10,7 +10,9 @@ function Toast({ message, type = "success", onClose }) {
           className={
             type === "success"
               ? "font-medium text-green-600 bg-green-200 p-4 rounded-l-lg"
-              : "font-medium text-red-600 bg-red-200 p-4 rounded-l-lg"
+              : type === "warning"
+                ? "font-medium text-yellow-600 bg-yellow-200 p-4 rounded-l-lg"
+                : "font-medium text-red-600 bg-red-200 p-4 rounded-l-lg"
           }
         >
           {message}
