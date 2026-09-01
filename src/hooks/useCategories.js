@@ -60,9 +60,31 @@ const useCategories = () => {
     }
   };
 
+  const editarCategoria = async (id, dados) => {
+    setLoading(true);
+
+    try {
+      const response = await api.put(`/categorias/${id}`, dados);
+
+      return {
+        success: true,
+        categoria: response.data,
+        message: "Categoria atualizada com sucesso!",
+      };
+    } catch {
+      return {
+        success: false,
+        message: "Ocorreu um erro ao atualizar a categoria. Tente novamente.",
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     buscarCategorias,
     criarCategoria,
+    editarCategoria,
     loading,
     error,
   };
