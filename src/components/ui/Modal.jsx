@@ -41,7 +41,7 @@ function Modal({
 
         <div className="mt-4 flex gap-3">
           <Button
-            type="submit"
+            type="button"
             className="disabled:cursor-auto disabled:bg-gray-400"
             onClick={onSubmit}
             disabled={disabled}
@@ -49,7 +49,7 @@ function Modal({
             {submitText}
           </Button>
 
-          <Button onClick={onClose} className="bg-red-600">
+          <Button type="button" onClick={onClose} className="bg-red-600">
             Cancelar
           </Button>
         </div>

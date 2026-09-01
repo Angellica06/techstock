@@ -6,6 +6,7 @@ import { columns } from "../components/table/CategoryColumns";
 import Modal from "../components/ui/Modal";
 import { useState, useEffect } from "react";
 import useCategories from "../hooks/useCategories";
+import Toast from "../components/ui/Toast";
 
 function Categorias() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -13,14 +14,15 @@ function Categorias() {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [busca, setBusca] = useState("");
+  const [toast, setToast] = useState("");
 
-  const { buscarCategorias, loading, error } = useCategories();
+  const { buscarCategorias, criarCategoria, loading, error } = useCategories();
 
   useEffect(() => {
     const carregarCategorias = async () => {
       const resultado = await buscarCategorias();
 
-      setCategorias(resultado.categoria);
+      setCategorias([...resultado.categoria].reverse());
     };
 
     carregarCategorias();
@@ -30,8 +32,37 @@ function Categorias() {
     categoria.nome.toLowerCase().includes(busca.toLowerCase()),
   );
 
+  const handleSubmit = async () => {
+    const resultado = await criarCategoria({
+      nome,
+      descricao,
+    });
+
+    if (resultado.success) {
+      setCategorias((categoriasAtuais) => [
+        resultado.categoria,
+        ...categoriasAtuais,
+      ]);
+
+      setNome("");
+      setDescricao("");
+      setIsOpenModal(false);
+    }
+
+    setToast({
+      message: resultado.message,
+      type: resultado.success ? "success" : "error",
+    });
+  };
+
   return (
     <div className="ml-3 mr-6 my-6">
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast({ message: "", type: "success" })}
+      />
+
       <h1 className="text-text text-3xl font-semibold">Categorias</h1>
       <p>Gerencie as categorias dos seus produtos.</p>
 
@@ -64,6 +95,7 @@ function Categorias() {
         title="Nova categoria"
         description="Adicione uma nova categoria ao estoque."
         submitText={loading ? "Adicionando..." : "Adicionar"}
+        onSubmit={handleSubmit}
         disabled={nome === "" || descricao === ""}
       >
         <div className="col-span-2">

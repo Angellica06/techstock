@@ -39,8 +39,30 @@ const useCategories = () => {
     }
   };
 
+  const criarCategoria = async (dados) => {
+    setLoading(true);
+
+    try {
+      const response = await api.post("/categorias", dados);
+
+      return {
+        success: true,
+        categoria: response.data,
+        message: "Categoria criada com sucesso!",
+      };
+    } catch {
+      return {
+        success: false,
+        message: "Ocorreu um erro ao criar a categoria. Tente novamente.",
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     buscarCategorias,
+    criarCategoria,
     loading,
     error,
   };
