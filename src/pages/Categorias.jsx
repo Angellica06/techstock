@@ -7,6 +7,7 @@ import Modal from "../components/ui/Modal";
 import { useState, useEffect } from "react";
 import useCategories from "../hooks/useCategories";
 import Toast from "../components/ui/Toast";
+import ConfirmModal from "../components/ui/ConfirmModal";
 
 function Categorias() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -16,9 +17,17 @@ function Categorias() {
   const [busca, setBusca] = useState("");
   const [toast, setToast] = useState("");
   const [categoriaEditando, setCategoriaEditando] = useState(null);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+  const [categoriaParaExcluir, setCategoriaParaExcluir] = useState(null);
 
-  const { buscarCategorias, criarCategoria, editarCategoria, loading, error } =
-    useCategories();
+  const {
+    buscarCategorias,
+    criarCategoria,
+    editarCategoria,
+    excluirCategoria,
+    loading,
+    error,
+  } = useCategories();
 
   useEffect(() => {
     const carregarCategorias = async () => {
@@ -111,6 +120,33 @@ function Categorias() {
     });
   };
 
+  const handleDelete = (categoria) => {
+    setCategoriaParaExcluir(categoria);
+    setIsOpenConfirmModal(true);
+  };
+
+  const confirmarExclusao = async () => {
+    if (!categoriaParaExcluir) return;
+
+    const resultado = await excluirCategoria(categoriaParaExcluir.id);
+
+    if (resultado.success) {
+      setCategorias((categoriasAtuais) =>
+        categoriasAtuais.filter(
+          (categoria) => categoria.id !== categoriaParaExcluir.id,
+        ),
+      );
+
+      setIsOpenConfirmModal(false);
+      setCategoriaParaExcluir(null);
+    }
+
+    setToast({
+      message: resultado.message,
+      type: resultado.success ? "success" : "error",
+    });
+  };
+
   return (
     <div className="ml-3 mr-6 my-6">
       <Toast
@@ -148,6 +184,7 @@ function Categorias() {
         <DataTable
           columns={columns({
             onEdit: handleEdit,
+            onDelete: handleDelete,
           })}
           data={categoriasFiltradas}
           error={error}
@@ -198,6 +235,18 @@ function Categorias() {
           />
         </div>
       </Modal>
+
+      <ConfirmModal
+        isOpen={isOpenConfirmModal}
+        onClose={() => {
+          setIsOpenConfirmModal(false);
+          setCategoriaParaExcluir(null);
+        }}
+        onConfirm={confirmarExclusao}
+        title="Excluir categoria?"
+        message={`Tem certeza que deseja excluir a categoria "${categoriaParaExcluir?.nome}"? Essa ação não pode ser desfeita.`}
+        loading={loading}
+      />
     </div>
   );
 }

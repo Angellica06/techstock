@@ -81,10 +81,31 @@ const useCategories = () => {
     }
   };
 
+  const excluirCategoria = async (id) => {
+    setLoading(true);
+
+    try {
+      await api.delete(`/categorias/${id}`);
+
+      return {
+        success: true,
+        message: "Categoria excluída com sucesso!",
+      };
+    } catch {
+      return {
+        success: false,
+        message: "Ocorreu um erro ao excluir a categoria. Tente novamente.",
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     buscarCategorias,
     criarCategoria,
     editarCategoria,
+    excluirCategoria,
     loading,
     error,
   };

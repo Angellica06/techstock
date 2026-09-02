@@ -1,6 +1,6 @@
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 
-export const columns = ({ onEdit }) => [
+export const columns = ({ onEdit, onDelete }) => [
   {
     accessorKey: "nome",
     header: "Categorias",
@@ -25,7 +25,7 @@ export const columns = ({ onEdit }) => [
         <button
           className="cursor-pointer rounded-lg border p-2 text-red-600 transition-colors hover:bg-red-50"
           title="Excluir"
-          onClick={() => console.log("Excluir", row.original)}
+          onClick={() => onDelete(row.original)}
         >
           <FiTrash2 size={18} />
         </button>
