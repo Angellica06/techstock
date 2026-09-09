@@ -5,31 +5,8 @@ import DataTable from "../components/table/DataTable";
 import { columns } from "../components/table/ProductColumns";
 import { LuPlus } from "react-icons/lu";
 import Modal from "../components/ui/Modal";
-import { useState } from "react";
-
-const data = [
-  {
-    code: "PRD-001",
-    name: "Notebook Dell",
-    category: "Computadores",
-    stock: 10,
-    price: 4500,
-  },
-  {
-    code: "ACC-001",
-    name: "Mouse Logitech",
-    category: "Acessórios",
-    stock: 0,
-    price: 120,
-  },
-  {
-    code: "MON-001",
-    name: "Monitor LG 24''",
-    category: "Monitores",
-    stock: 32,
-    price: 899.9,
-  },
-];
+import { useState, useEffect } from "react";
+import useProducts from "../hooks/useProducts";
 
 const categoryOptions = [
   { value: "", label: "Todas as categorias" },
@@ -47,6 +24,19 @@ const statusOptions = [
 
 function Products() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [produtos, setProdutos] = useState([]);
+
+  const { listarProdutos, error } = useProducts();
+
+  useEffect(() => {
+    const carregarprodutos = async () => {
+      const resultado = await listarProdutos();
+
+      setProdutos([...resultado.produtos].reverse());
+    };
+
+    carregarprodutos();
+  }, []);
 
   return (
     <div className="ml-3 mr-6 my-6">
@@ -70,7 +60,7 @@ function Products() {
       </div>
 
       <div className="mt-6 overflow-x-auto">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={produtos} error={error} />
       </div>
 
       <Modal

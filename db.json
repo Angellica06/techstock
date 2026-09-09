@@ -7,6 +7,24 @@
       "password": "T3ch@Stock#2026"
     }
   ],
+  "produtos": [
+    {
+      "id": "1",
+      "codigo": "PRD-0001",
+      "nome": "Notebook Dell",
+      "categoria": "Eletrônicos",
+      "preco": 3500,
+      "estoque": 68
+    },
+    {
+      "id": "2",
+      "codigo": "PRD-0002",
+      "nome": "Mouse Logitech",
+      "categoria": "Periféricos",
+      "preco": 96,
+      "estoque": 90
+    }
+  ],
   "categorias": [
     {
       "id": "1",
@@ -18,5 +36,6 @@
       "nome": "Periféricos",
       "descricao": "Acessórios e dispositivos para computadores."
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

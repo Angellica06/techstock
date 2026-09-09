@@ -2,25 +2,25 @@ import { FiEdit3, FiTrash2 } from "react-icons/fi";
 
 export const columns = [
   {
-    accessorKey: "name",
+    accessorKey: "nome",
     header: "Produto",
   },
   {
-    accessorKey: "category",
+    accessorKey: "categoria",
     header: "Categoria",
   },
   {
-    accessorKey: "code",
+    accessorKey: "codigo",
     header: "Código",
   },
   {
-    accessorKey: "stock",
+    accessorKey: "estoque",
     header: "Estoque",
   },
   {
-    accessorKey: "price",
+    accessorKey: "preco",
     header: "Preço",
-    cell: ({ row }) => `R$ ${row.original.price.toFixed(2).replace(".", ",")}`,
+    cell: ({ row }) => `R$ ${row.original.preco.toFixed(2).replace(".", ",")}`,
   },
   {
     id: "status",
