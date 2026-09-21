@@ -1,9 +1,11 @@
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-function Select({ options }) {
+function Select({ options, value, onChange }) {
   return (
     <div className="relative">
       <select
+        value={value}
+        onChange={onChange}
         className="w-full appearance-none rounded-lg border border-gray-300 py-3 pl-4 pr-11 shadow 
       outline-none focus:border-blue-200 focus:ring-1 focus:ring-blue-200"
       >
