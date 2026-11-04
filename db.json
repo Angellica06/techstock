@@ -25,6 +25,9 @@
       "estoque": 90
     }
   ],
+  "contadorProdutos": {
+    "ultimoCodigo": 4
+  },
   "categorias": [
     {
       "id": "1",

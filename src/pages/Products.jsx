@@ -21,8 +21,13 @@ function Products() {
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("");
   const [status, setStatus] = useState("");
+  const [nome, setNome] = useState("");
+  const [categoriaProduto, setCategoriaProduto] = useState("");
+  const [estoque, setEstoque] = useState("");
+  const [estoqueMinimo, setEstoqueMinimo] = useState("");
+  const [preco, setPreco] = useState("");
 
-  const { listarProdutos, error } = useProducts();
+  const { listarProdutos, criarProduto, gerarCodigo, error } = useProducts();
 
   useEffect(() => {
     const carregarprodutos = async () => {
@@ -68,6 +73,35 @@ function Products() {
     return correspondeBusca && correspondeCategoria && correspondeStatus;
   });
 
+  const handleCadastrarProduto = async () => {
+    const codigo = await gerarCodigo();
+
+    if (!codigo) return;
+
+    const novoProduto = {
+      codigo,
+      nome,
+      categoria: categoriaProduto,
+      preco: Number(preco),
+      estoque: Number(estoque),
+      estoqueMinimo: Number(estoqueMinimo),
+    };
+
+    const resultado = await criarProduto(novoProduto);
+
+    if (resultado.success) {
+      setProdutos((prev) => [resultado.produto, ...prev]);
+
+      setNome("");
+      setCategoriaProduto("");
+      setEstoque("");
+      setEstoqueMinimo("");
+      setPreco("");
+
+      setIsOpenModal(false);
+    }
+  };
+
   return (
     <div className="ml-3 mr-6 my-6">
       <h1 className="text-text text-3xl font-semibold">Produtos</h1>
@@ -112,30 +146,55 @@ function Products() {
         title="Novo produto"
         description="Adicione um novo produto ao estoque."
         submitText="Adicionar"
+        onSubmit={handleCadastrarProduto}
       >
         <div className="col-span-2">
           <label>Nome do produto</label>
-          <Input type="text" placeholder="Nome do produto" />
+          <Input
+            type="text"
+            placeholder="Nome do produto"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
         </div>
 
         <div className="col-span-2">
           <label>Categoria</label>
-          <Select options={categoryOptions} />
+          <Select
+            options={categoryOptions}
+            value={categoriaProduto}
+            onChange={(e) => setCategoriaProduto(e.target.value)}
+          />
         </div>
 
         <div>
           <label>Estoque</label>
-          <Input type="number" placeholder="Estoque" />
+          <Input
+            type="number"
+            placeholder="Estoque"
+            value={estoque}
+            onChange={(e) => setEstoque(e.target.value)}
+          />
         </div>
 
         <div>
           <label>Estoque mínimo</label>
-          <Input type="number" placeholder="Estoque mínimo" />
+          <Input
+            type="number"
+            placeholder="Estoque mínimo"
+            value={estoqueMinimo}
+            onChange={(e) => setEstoqueMinimo(e.target.value)}
+          />
         </div>
 
         <div className="col-span-2">
-          <label>Preço</label>
-          <Input type="text" placeholder="Preço R$" />
+          <label>Preço (R$)</label>
+          <Input
+            type="number"
+            placeholder="0,00"
+            value={preco}
+            onChange={(e) => setPreco(e.target.value)}
+          />
         </div>
       </Modal>
     </div>

@@ -26,7 +26,7 @@ export const columns = [
     id: "status",
     header: "Status",
     cell: ({ row }) => {
-      const stock = row.original.stock;
+      const stock = row.original.estoque;
 
       if (stock === 0) {
         return (
